@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="description" content="Train VQ-VAE and ViTMAE for image embeddings">
 
-<title>advanced_autoencoders</title>
+<title>advanced_autoencoders - Define Pipeline to generate embeddings</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -104,10 +103,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <link rel="stylesheet" href="styles.css">
-<meta property="og:title" content="advanced_autoencoders">
+<meta property="og:title" content="advanced_autoencoders - Define Pipeline to generate embeddings">
 <meta property="og:description" content="Train VQ-VAE and ViTMAE for image embeddings">
 <meta property="og:site_name" content="advanced_autoencoders">
-<meta name="twitter:title" content="advanced_autoencoders">
+<meta name="twitter:title" content="advanced_autoencoders - Define Pipeline to generate embeddings">
 <meta name="twitter:description" content="Train VQ-VAE and ViTMAE for image embeddings">
 <meta name="twitter:card" content="summary">
 </head>
@@ -133,7 +132,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">advanced_autoencoders</a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./inference_pipeline.html">Define Pipeline to generate embeddings</a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
     </div>
@@ -147,7 +146,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">advanced_autoencoders</span></a>
   </div>
 </li>
@@ -183,7 +182,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./inference_pipeline.html" class="sidebar-item-text sidebar-link">
+  <a href="./inference_pipeline.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text">Define Pipeline to generate embeddings</span></a>
   </div>
 </li>
@@ -221,8 +220,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#install" id="toc-install" class="nav-link active" data-scroll-target="#install">Install</a></li>
-  <li><a href="#how-to-use" id="toc-how-to-use" class="nav-link" data-scroll-target="#how-to-use">How to use</a></li>
+  <li><a href="#get_test_data_loader" id="toc-get_test_data_loader" class="nav-link active" data-scroll-target="#get_test_data_loader">get_test_data_loader</a></li>
+  <li><a href="#load_model" id="toc-load_model" class="nav-link" data-scroll-target="#load_model">load_model</a></li>
+  <li><a href="#generate_embeddings_df" id="toc-generate_embeddings_df" class="nav-link" data-scroll-target="#generate_embeddings_df">generate_embeddings_df</a></li>
+  <li><a href="#save_data" id="toc-save_data" class="nav-link" data-scroll-target="#save_data">save_data</a></li>
+  <li><a href="#generate_embedding_mae_pipeline" id="toc-generate_embedding_mae_pipeline" class="nav-link" data-scroll-target="#generate_embedding_mae_pipeline">generate_embedding_mae_pipeline</a></li>
+  <li><a href="#generate_embedding_vqvae_pipeline" id="toc-generate_embedding_vqvae_pipeline" class="nav-link" data-scroll-target="#generate_embedding_vqvae_pipeline">generate_embedding_vqvae_pipeline</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/rohitMalhotra07/advanced_autoencoders/issues/new" class="toc-action"><i class="bi bi-github"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -231,14 +234,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">advanced_autoencoders</h1>
+<h1 class="title">Define Pipeline to generate embeddings</h1>
 </div>
 
-<div>
-  <div class="description">
-    Train VQ-VAE and ViTMAE for image embeddings
-  </div>
-</div>
 
 
 <div class="quarto-title-meta">
@@ -254,13 +252,161 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 <!-- WARNING: THIS FILE WAS AUTOGENERATED! DO NOT EDIT! -->
-<p>This file will become your README and also the index of your documentation.</p>
-<section id="install" class="level2">
-<h2 class="anchored" data-anchor-id="install">Install</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode sh code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install advanced_autoencoders</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="d7926aa1-9a4a-443d-a8a7-3d4c339f3ba2" class="cell">
+<details open="" class="code-fold">
+<summary>Exported source</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.utils.data <span class="im">import</span> DataLoader</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> advanced_autoencoders.config <span class="im">import</span> ConfigMaeLarge, ConfigVQVAE</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> advanced_autoencoders.dataset <span class="im">import</span> MyImageDataset</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> advanced_autoencoders.models <span class="im">import</span> (</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    get_embeddings_mae,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    get_embeddings_vae,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    get_mae_model,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    get_vae_model,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> advanced_autoencoders.utils <span class="im">import</span> (</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    get_test_transforms,</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    make_images_dataframe,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    seed_everything,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<hr>
+<p><a href="https://github.com/rohitMalhotra07/advanced_autoencoders/blob/main/advanced_autoencoders/inference.py#L29" target="_blank" style="float:right; font-size:smaller">source</a></p>
+<section id="get_test_data_loader" class="level3">
+<h3 class="anchored" data-anchor-id="get_test_data_loader">get_test_data_loader</h3>
+<blockquote class="blockquote">
+<pre><code> get_test_data_loader (df, cnfg)</code></pre>
+</blockquote>
+<div id="5ab0ba05-09bb-4dc2-9c8d-8c7d4506ba81" class="cell">
+<details open="" class="code-fold">
+<summary>Exported source</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_test_data_loader(df, cnfg):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    dataset <span class="op">=</span> MyImageDataset(df, augmentations<span class="op">=</span>get_test_transforms(cnfg))</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    dl <span class="op">=</span> DataLoader(dataset, batch_size<span class="op">=</span><span class="dv">32</span>, shuffle<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> dl</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<hr>
+<p><a href="https://github.com/rohitMalhotra07/advanced_autoencoders/blob/main/advanced_autoencoders/inference.py#L36" target="_blank" style="float:right; font-size:smaller">source</a></p>
 </section>
-<section id="how-to-use" class="level2">
-<h2 class="anchored" data-anchor-id="how-to-use">How to use</h2>
+<section id="load_model" class="level3">
+<h3 class="anchored" data-anchor-id="load_model">load_model</h3>
+<blockquote class="blockquote">
+<pre><code> load_model (cnfg, model)</code></pre>
+</blockquote>
+<div id="f599ba70-bce2-46d3-a7eb-7aee00890657" class="cell">
+<details open="" class="code-fold">
+<summary>Exported source</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> load_model(cnfg, model):</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    model.load_state_dict(torch.load(<span class="ss">f"</span><span class="sc">{</span>cnfg<span class="sc">.</span>MODELS_DIR<span class="sc">}{</span>cnfg<span class="sc">.</span>model_name<span class="sc">}</span><span class="ss">.bin"</span>))</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    model.cuda()</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    model.<span class="bu">eval</span>()</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> model</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<hr>
+<p><a href="https://github.com/rohitMalhotra07/advanced_autoencoders/blob/main/advanced_autoencoders/inference.py#L44" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="generate_embeddings_df" class="level3">
+<h3 class="anchored" data-anchor-id="generate_embeddings_df">generate_embeddings_df</h3>
+<blockquote class="blockquote">
+<pre><code> generate_embeddings_df (cnfg, model, dl, embd_name, get_embd_fnc)</code></pre>
+</blockquote>
+<div id="a688190e-e5e0-4a6e-9aba-6d51e27b4391" class="cell">
+<details open="" class="code-fold">
+<summary>Exported source</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_embeddings_df(cnfg, model, dl, embd_name, get_embd_fnc):</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    all_embeddings <span class="op">=</span> []</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> torch.no_grad():</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> i, samples <span class="kw">in</span> <span class="bu">enumerate</span>(tqdm(dl)):</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>            embeddings <span class="op">=</span> get_embd_fnc(model, samples.cuda())</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>            <span class="co"># embeddings = torch.flatten(encoded, start_dim=1).cpu().numpy()</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>            all_embeddings.extend(embeddings)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    final_df <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        data<span class="op">=</span>np.array(all_embeddings),</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>        columns<span class="op">=</span>cnfg.EMBEDDING_COL_NAMES,</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    final_df[embd_name] <span class="op">=</span> new_df[embd_name].values</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> final_df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<hr>
+<p><a href="https://github.com/rohitMalhotra07/advanced_autoencoders/blob/main/advanced_autoencoders/inference.py#L61" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="save_data" class="level3">
+<h3 class="anchored" data-anchor-id="save_data">save_data</h3>
+<blockquote class="blockquote">
+<pre><code> save_data (df, cnfg)</code></pre>
+</blockquote>
+<div id="783ac975-48d5-4a75-a954-1e0043f98048" class="cell">
+<details open="" class="code-fold">
+<summary>Exported source</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> save_data(df, cnfg):</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    df.to_csv(cnfg.EMBEDDING_FILE_PATH, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<hr>
+<p><a href="https://github.com/rohitMalhotra07/advanced_autoencoders/blob/main/advanced_autoencoders/inference.py#L65" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="generate_embedding_mae_pipeline" class="level3">
+<h3 class="anchored" data-anchor-id="generate_embedding_mae_pipeline">generate_embedding_mae_pipeline</h3>
+<blockquote class="blockquote">
+<pre><code> generate_embedding_mae_pipeline ()</code></pre>
+</blockquote>
+<div id="e619c8a0-b188-4a15-a15a-77ea370a49f8" class="cell">
+<details open="" class="code-fold">
+<summary>Exported source</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_embedding_mae_pipeline():</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    CONFIG <span class="op">=</span> ConfigMaeLarge()</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    seed_everything(seed<span class="op">=</span>CONFIG.seed)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    df_all <span class="op">=</span> make_images_dataframe(CONFIG)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(df_all.shape, df_all.image_name.unique().size)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>    dl <span class="op">=</span> get_test_data_loader(df_all, CONFIG)</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> get_mae_model(cnfg)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> load_model(CONFIG, model)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    final_df <span class="op">=</span> generate_embeddings_df(CONFIG, model, dl, <span class="st">"mae_emb"</span>, get_embeddings_mae)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>    save_data(final_df, CONFIG)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<hr>
+<p><a href="https://github.com/rohitMalhotra07/advanced_autoencoders/blob/main/advanced_autoencoders/inference.py#L80" target="_blank" style="float:right; font-size:smaller">source</a></p>
+</section>
+<section id="generate_embedding_vqvae_pipeline" class="level3">
+<h3 class="anchored" data-anchor-id="generate_embedding_vqvae_pipeline">generate_embedding_vqvae_pipeline</h3>
+<blockquote class="blockquote">
+<pre><code> generate_embedding_vqvae_pipeline ()</code></pre>
+</blockquote>
+<div id="460b76ae-8b45-4c44-ad4d-b959a9a7542f" class="cell">
+<details open="" class="code-fold">
+<summary>Exported source</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate_embedding_vqvae_pipeline():</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    CONFIG <span class="op">=</span> ConfigVQVAE()</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    seed_everything(seed<span class="op">=</span>CONFIG.seed)</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>    df_all <span class="op">=</span> make_images_dataframe(CONFIG)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(df_all.shape, df_all.image_name.unique().size)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    dl <span class="op">=</span> get_test_data_loader(df_all, CONFIG)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> get_vae_model(cnfg)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>    model <span class="op">=</span> load_model(CONFIG, model)</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    final_df <span class="op">=</span> generate_embeddings_df(CONFIG, model, dl, <span class="st">"vae_emb"</span>, get_embeddings_vae)</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    save_data(final_df, CONFIG)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 
 
 </section>

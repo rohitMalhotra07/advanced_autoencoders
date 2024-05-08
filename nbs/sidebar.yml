@@ -1,0 +1,14 @@
+website:
+  sidebar:
+    contents:
+      - index.ipynb
+      - 00_core.ipynb
+      - EDA_data.ipynb
+      - TRAIN.ipynb
+      - config.ipynb
+      - dataset.ipynb
+      - inference_pipeline.ipynb
+      - models.ipynb
+      - trainers.ipynb
+      - training_pipeline.ipynb
+      - utils.ipynb
