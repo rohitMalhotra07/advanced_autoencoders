@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "advanced_autoencoders"
+  site-url: "https://rohitMalhotra07.github.io/advanced_autoencoders"
+  description: "Train VQ-VAE and ViTMAE for image embeddings"
+  repo-branch: main
+  repo-url: "https://github.com/rohitMalhotra07/advanced_autoencoders"
