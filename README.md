@@ -28,3 +28,7 @@ pip install advanced_autoencoders
 - Checkout nbs/training_pipelines.ipynb and train_pipeline_mae function
 
 - Make changes in config file in ConfigMaeLarge
+
+## Docs
+
+- https://rohitmalhotra07.github.io/advanced_autoencoders/
