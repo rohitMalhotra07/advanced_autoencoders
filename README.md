@@ -32,3 +32,11 @@ pip install advanced_autoencoders
 ## Docs
 
 - https://rohitmalhotra07.github.io/advanced_autoencoders/
+
+### Sample Training Reconstruction
+
+``` python
+pil_im
+```
+
+![](index_files/figure-commonmark/cell-2-output-1.png)
